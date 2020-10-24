@@ -2,6 +2,100 @@ import java.lang.Math;
 
 class Main {
 
+    public static Students mergeGPA(Students listA, Students listB) {
+
+        int i = 0;
+        int j = 0;
+
+        int sizeA = listA.getStudentsAmount();
+        int sizeB = listB.getStudentsAmount();
+
+        Students mergedList = new Students();
+
+        while (i < sizeA && j < sizeB) {
+
+            Student studentA = listA.getStudent(i);
+            Student studentB = listB.getStudent(j);
+
+            while (studentA.getGPA() > studentB.getGPA()) {
+                i++;
+                mergedList.addStudent(studentA);
+                if (i >= sizeA)
+                    break;
+                studentA = listA.getStudent(i);
+            }
+            while (studentB.getGPA() >= studentA.getGPA()) {
+                j++;
+                mergedList.addStudent(studentB);
+                if (j >= sizeB)
+                    break;
+                studentB = listB.getStudent(j);
+            }
+
+        }
+
+        while (i < sizeA) {
+            Student studentA = listA.getStudent(i);
+            mergedList.addStudent(studentA);
+            i++;
+        }
+        while (j < sizeB) {
+            Student studentB = listB.getStudent(j);
+            mergedList.addStudent(studentB);
+            j++;
+        }
+
+        return mergedList;
+
+    }
+
+    public static Students mergeID(Students listA, Students listB) {
+
+        int i = 0;
+        int j = 0;
+
+        int sizeA = listA.getStudentsAmount();
+        int sizeB = listB.getStudentsAmount();
+
+        Students mergedList = new Students();
+
+        while (i < sizeA && j < sizeB) {
+
+            Student studentA = listA.getStudent(i);
+            Student studentB = listB.getStudent(j);
+
+            while (studentA.getId() < studentB.getId()) {
+                i++;
+                mergedList.addStudent(studentA);
+                if (i >= sizeA)
+                    break;
+                studentA = listA.getStudent(i);
+            }
+            while (studentB.getId() <= studentA.getId()) {
+                j++;
+                mergedList.addStudent(studentB);
+                if (j >= sizeB)
+                    break;
+                studentB = listB.getStudent(j);
+            }
+
+        }
+
+        while (i < sizeA) {
+            Student studentA = listA.getStudent(i);
+            mergedList.addStudent(studentA);
+            i++;
+        }
+        while (j < sizeB) {
+            Student studentB = listB.getStudent(j);
+            mergedList.addStudent(studentB);
+            j++;
+        }
+
+        return mergedList;
+
+    }
+
     public static void main(String[] args) {
 
         Student a = new Student(6,87.2);
@@ -40,6 +134,19 @@ class Main {
 
         System.out.println("\n=== SORTED BY GPA (MERGE SORT) ===");
         System.out.println(anotherStudentsList);
+
+        Students studentsMergedGPA = mergeGPA(studentsList,anotherStudentsList);
+
+        System.out.println("\n=== MERGED BY GPA ===");
+        System.out.println(studentsMergedGPA);
+
+        studentsList.sortById();
+        anotherStudentsList.sortById();
+
+        Students studentsMergedID = mergeID(studentsList,anotherStudentsList);
+
+        System.out.println("\n=== MERGED BY ID ===");
+        System.out.println(studentsMergedID);
 
     }
 
