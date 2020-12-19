@@ -4,39 +4,43 @@ public class SortingStudentsByGPA implements Comparator<Student> {
 
     public void quickSort(Students studentsList, int left, int right) {
 
-        int mid = (left+right)/2;
-        Student midStudent = studentsList.getStudent(mid);
+        if (left < right) {
 
-        int i = left;
-        int j = right;
+            int mid = (left + right) / 2;
+            Student midStudent = studentsList.getStudent(mid);
 
-        while (i <= j) {
+            int i = left;
+            int j = right;
 
-            Student studentA = studentsList.getStudent(i);
-            Student studentB = studentsList.getStudent(j);
+            while (i <= j) {
 
-            while (this.compare(studentA,midStudent) > 0) {
+                Student studentA = studentsList.getStudent(i);
+                Student studentB = studentsList.getStudent(j);
+
+                while (this.compare(studentA, midStudent) > 0) {
+                    i++;
+                    studentA = studentsList.getStudent(i);
+                }
+                while (this.compare(studentB, midStudent) < 0) {
+                    j--;
+                    studentB = studentsList.getStudent(j);
+                }
+
+                if (i >= j)
+                    break;
+
+                studentsList.setStudent(i, studentB);
+                studentsList.setStudent(j, studentA);
+
                 i++;
-                studentA = studentsList.getStudent(i);
-            }
-            while (this.compare(studentB,midStudent) < 0) {
                 j--;
-                studentB = studentsList.getStudent(j);
+
             }
 
-            if (i >= j)
-                break;
 
-            studentsList.setStudent(i,studentB);
-            studentsList.setStudent(j,studentA);
-
-            i++; j--;
-
-        }
-
-        if (left < j) {
             quickSort(studentsList, left, j);
             quickSort(studentsList, j + 1, right);
+
         }
 
     }
